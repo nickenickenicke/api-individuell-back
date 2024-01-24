@@ -46,7 +46,7 @@ const players = [
     name: "Daniel Alfredsson",
     jersey: 10,
     team: "Ottawa Senators",
-    position: "Oklart",
+    position: "Defence",
   },
 ];
 
@@ -60,4 +60,12 @@ app.get("/", (req, res) => {
 
 app.get("/players", (req, res) => {
   res.json(players);
+});
+
+app.put("/players", (req, res) => {
+  //  PUT HERE
+});
+
+app.post("/players", (req, res) => {
+  //  POST HERE
 });
