@@ -39,7 +39,7 @@ const players = [
   {
     id: 5,
     name: "Henrik Lundqvist",
-    jersey: 0,
+    jersey: 444,
     team: "New York Rangers",
     position: "Goalie",
   },
@@ -77,5 +77,13 @@ app.put("/players/:playerId", (req, res) => {
 });
 
 app.post("/players", (req, res) => {
-  //  POST HERE
+  console.log(req.body);
+  players.push({
+    id: players.length,
+    name: req.body.name,
+    jersey: req.body.jersey,
+    team: req.body.team,
+    position: req.body.position,
+  });
+  res.status(201).send("Skapad");
 });

@@ -8,8 +8,17 @@ content-type: application/json; charset=utf-8
 {
     "name": "Tomten",
     "jersey": 10000,
-    "position": "Goalie"
+    "position": "Goalie",
+    "team": "North Pole Orcas"
 }
 
 ### Post player
 POST http://localhost:3000/players
+content-type: application/json; charset=utf-8
+
+{
+    "name": "Den andra Tomten",
+    "jersey": 123,
+    "position": "Forward",
+    "team": "Hammarby IF"
+}
