@@ -1,9 +1,11 @@
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 
 app.use(cors());
+app.use(bodyParser.json());
 
 const players = [
   {
@@ -62,8 +64,16 @@ app.get("/players", (req, res) => {
   res.json(players);
 });
 
-app.put("/players", (req, res) => {
-  //  PUT HERE
+app.put("/players/:playerId", (req, res) => {
+  let player = players.find((players) => players.id == req.params.playerId);
+  if (player) {
+    player.name = req.body.name;
+    player.jersey = req.body.jersey;
+    player.position = req.body.position;
+    res.status(204).send("");
+  }
+
+  if (!player) res.status(404).send("Finns inte");
 });
 
 app.post("/players", (req, res) => {
