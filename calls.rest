@@ -1,0 +1,8 @@
+### GET alla
+GET http://localhost:3000/players
+
+### Put player
+PUT http://localhost:3000/players
+
+### Post player
+POST http://localhost:3000/players
