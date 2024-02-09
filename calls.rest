@@ -1,6 +1,9 @@
 ### GET alla
 GET http://localhost:3000/players
 
+### GET test
+GET http://localhost:3000/
+
 ### Put player
 PUT http://localhost:3000/players/1
 content-type: application/json; charset=utf-8
@@ -18,7 +21,7 @@ content-type: application/json; charset=utf-8
 
 {
     "name": "Den andra Tomten",
-    "jersey": 123,
+    "jersey": "k",
     "position": "Forward",
     "team": "Hammarby IF"
 }
