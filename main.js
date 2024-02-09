@@ -18,7 +18,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/players", async (req, res) => {
-  const players = await Player.findAll();
+  console.log(req.query);
+  const players = await Player.findAll({
+    order: [[req.query.sortBy, req.query.orderBy]],
+  });
   res.json(players);
 });
 
