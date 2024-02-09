@@ -19,9 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/players", async (req, res) => {
-  console.log(req.query);
-  let searchQuery = "%";
-  if (req.query.search) searchQuery = `%${req.query.search}%`;
+  let searchQuery = `%${req.query.search}%`;
   const players = await Player.findAll({
     where: {
       [Op.or]: [
