@@ -69,16 +69,32 @@ app.get("/players", async (req, res) => {
   res.json(players);
 });
 
-app.put("/players/:playerId", (req, res) => {
-  let player = players.find((players) => players.id == req.params.playerId);
-  if (player) {
-    player.name = req.body.name;
-    player.jersey = req.body.jersey;
-    player.position = req.body.position;
+app.put("/players/:playerId", async (req, res) => {
+  // let player = players.find((players) => players.id == req.params.playerId);
+  // if (player) {
+  //   player.name = req.body.name;
+  //   player.jersey = req.body.jersey;
+  //   player.position = req.body.position;
+  //   res.status(204).send("");
+  // }
+
+  const playerId = parseInt(req.params.playerId) || 0;
+  const thePlayer = await Player.findOne({
+    where: { id: playerId },
+  });
+
+  if (thePlayer) {
+    thePlayer.name = req.body.name;
+    thePlayer.jersey = parseInt(req.body.jersey) || 0;
+    thePlayer.team = req.body.team;
+    thePlayer.position = req.body.position;
+
+    await thePlayer.save();
+
     res.status(204).send("");
   }
 
-  if (!player) res.status(404).send("Finns inte");
+  if (!thePlayer) res.status(404).send("Finns inte");
 });
 
 app.post("/players", async (req, res) => {
