@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 
 const { sequelize, Player } = require("./models");
+const { Op } = require("sequelize");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,7 +20,33 @@ app.get("/", (req, res) => {
 
 app.get("/players", async (req, res) => {
   console.log(req.query);
+  let searchQuery = "%";
+  if (req.query.search) searchQuery = `%${req.query.search}%`;
   const players = await Player.findAll({
+    where: {
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: searchQuery,
+          },
+        },
+        {
+          jersey: {
+            [Op.like]: searchQuery,
+          },
+        },
+        {
+          team: {
+            [Op.like]: searchQuery,
+          },
+        },
+        {
+          position: {
+            [Op.like]: searchQuery,
+          },
+        },
+      ],
+    },
     order: [[req.query.sortBy, req.query.orderBy]],
   });
   res.json(players);
