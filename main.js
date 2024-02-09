@@ -62,7 +62,10 @@ app.get("/", (req, res) => {
   res.send("Här är ett api som funkar");
 });
 
-app.get("/players", (req, res) => {
+app.get("/players", async (req, res) => {
+  // res.json(players);
+
+  const players = await Player.findAll();
   res.json(players);
 });
 
