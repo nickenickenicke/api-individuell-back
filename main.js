@@ -30,7 +30,7 @@ app.get("/players", validateQuery, async (req, res) => {
   let offset = req.query.offset || 0;
   let limit = req.query.pageSize || 10;
 
-  const players = await Player.findAll({
+  const allPlayers = await Player.findAndCountAll({
     where: {
       [Op.or]: [
         {
@@ -60,7 +60,18 @@ app.get("/players", validateQuery, async (req, res) => {
     limit: limit,
   });
 
-  res.json(players);
+  const total = allPlayers.count;
+  const result = allPlayers.rows.map((player) => {
+    return {
+      id: player.id,
+      name: player.name,
+      jersey: player.jersey,
+      team: player.team,
+      position: player.position,
+    };
+  });
+
+  res.json({ total, result });
 });
 
 app.put("/players/:playerId", validatePlayer, async (req, res) => {
