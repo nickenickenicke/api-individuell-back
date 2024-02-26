@@ -1,5 +1,5 @@
 ### GET alla
-GET http://localhost:3000/players?sortBy=name&orderBy=desc&search=
+GET http://localhost:3000/players?sortBy=name&orderBy=desc&search=&offset=0&pageSize=10
 
 ### GET test
 GET http://localhost:3000/

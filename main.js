@@ -5,8 +5,11 @@ const app = express();
 const port = 3000;
 
 const { sequelize, Player } = require("./models");
-const { Op } = require("sequelize");
-const { validatePlayer } = require("./validators/playerValidators");
+const { Op, or } = require("sequelize");
+const {
+  validatePlayer,
+  validateQuery,
+} = require("./validators/playerValidators");
 
 app.use(cors());
 app.use(express.json());
@@ -20,8 +23,13 @@ app.get("/", (req, res) => {
   res.send("Här är ett api som funkar");
 });
 
-app.get("/players", async (req, res) => {
-  let searchQuery = `%${req.query.search}%`;
+app.get("/players", validateQuery, async (req, res) => {
+  let searchQuery = `%${req.query.search}%` || "%%";
+  let sortBy = req.query.sortBy || "id";
+  let orderBy = req.query.orderBy || "ASC";
+  let offset = req.query.offset || 0;
+  let limit = req.query.pageSize || 10;
+
   const players = await Player.findAll({
     where: {
       [Op.or]: [
@@ -47,8 +55,11 @@ app.get("/players", async (req, res) => {
         },
       ],
     },
-    order: [[req.query.sortBy, req.query.orderBy]],
+    order: [[sortBy, orderBy]],
+    offset: offset,
+    limit: limit,
   });
+
   res.json(players);
 });
 

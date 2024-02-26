@@ -52,4 +52,29 @@ const validatePlayer = [
   },
 ];
 
-module.exports = { validatePlayer };
+const validateQuery = [
+  check("sortBy").escape(),
+  check("orderBy").escape(),
+  check("search").escape(),
+  check("pageSize")
+    .escape()
+    .isNumeric()
+    .withMessage("Page size can only contain numbers!")
+    .bail()
+    .toInt(),
+  check("offset")
+    .escape()
+    .isNumeric()
+    .withMessage("Offset can only contain numbers!")
+    .bail()
+    .toInt(),
+
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(422).json({ errors: errors.array() });
+    next();
+  },
+];
+
+module.exports = { validatePlayer, validateQuery };
