@@ -6,6 +6,7 @@ const port = 3000;
 
 const { sequelize, Player } = require("./models");
 const { Op } = require("sequelize");
+const { validatePlayer } = require("./validators/playerValidators");
 
 app.use(cors());
 app.use(express.json());
@@ -51,7 +52,7 @@ app.get("/players", async (req, res) => {
   res.json(players);
 });
 
-app.put("/players/:playerId", async (req, res) => {
+app.put("/players/:playerId", validatePlayer, async (req, res) => {
   const playerId = parseInt(req.params.playerId) || 0;
   const thePlayer = await Player.findOne({
     where: { id: playerId },
@@ -71,7 +72,7 @@ app.put("/players/:playerId", async (req, res) => {
   if (!thePlayer) res.status(404).send("Finns inte");
 });
 
-app.post("/players", async (req, res) => {
+app.post("/players", validatePlayer, async (req, res) => {
   await Player.create({
     name: req.body.name,
     jersey: parseInt(req.body.jersey) || 0,
