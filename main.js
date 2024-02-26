@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const migrationHelper = require("./migrationhelper");
 const app = express();
 const port = 3000;
 
@@ -9,7 +10,8 @@ const { Op } = require("sequelize");
 app.use(cors());
 app.use(express.json());
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  await migrationHelper.migrate();
   console.log(`Listening on port ${port}!`);
 });
 
