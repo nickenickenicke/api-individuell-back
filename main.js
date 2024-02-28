@@ -4,8 +4,8 @@ const migrationHelper = require("./migrationhelper");
 const app = express();
 const port = 3000;
 
-const { sequelize, Player } = require("./models");
-const { Op, or } = require("sequelize");
+const { Player } = require("./models");
+const { Op } = require("sequelize");
 const {
   validatePlayer,
   validateQuery,

@@ -19,10 +19,12 @@ const validatePlayer = [
     .isEmpty()
     .withMessage("Jersey can not be empty!")
     .bail()
-    .isNumeric()
+    .isNumeric({ no_symbols: true })
     .withMessage("Jersey can only contain numbers!")
     .bail()
-    .toInt(),
+    .toInt()
+    .isInt({ min: 1, max: 999 })
+    .withMessage("Jersey can only be between 1 and 999!"),
   check("team")
     .trim()
     .escape()
